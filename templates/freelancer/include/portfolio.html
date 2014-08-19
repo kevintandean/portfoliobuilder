@@ -1,0 +1,19 @@
+<section id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Portfolio</h2>
+                <hr class="star-primary">
+            </div>
+            <div id="space-for-buttons"></div>
+        </div>
+                                            <button ng-controller= "projectController" ng-click="addProject()"></button>
+<div class="row" id="portfolioThumbnail">
+ {% include 'freelancer/include/portfolio_thumbnail.html' %}
+</div>
+    </div>
+</section>
+
+<div id="modalcontainer">
+ {% include 'freelancer/include/portfolio_modal.html' %}
+</div>
