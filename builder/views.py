@@ -17,8 +17,9 @@ def landing(request):
         form = Form(request.POST)
         if form.is_valid():
             user = form.save()
+            print (request.POST)
             user = authenticate(username=request.POST['username'],
-                                    password=request.POST['password'])
+                                    password=request.POST['password1'])
             login(request, user)
 
             return redirect("edit")
