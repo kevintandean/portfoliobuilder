@@ -1,5 +1,5 @@
 import json
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -17,6 +17,8 @@ def landing(request):
         form = Form(request.POST)
         if form.is_valid():
             user = form.save()
+            user = authenticate(username=request.POST['username'],
+                                    password=request.POST['password'])
             login(request, user)
 
             return redirect("edit")
