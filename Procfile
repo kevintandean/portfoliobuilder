@@ -1,0 +1,1 @@
+web: gunicorn portfoliobuilder.wsgi --log-file -

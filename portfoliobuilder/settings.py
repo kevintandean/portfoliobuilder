@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -71,10 +71,15 @@ DATABASES = {
         'NAME': 'portfoliobuilder',
         'USER': 'postgres',
         # 'PORT': '5432',
-        'PASSWORD': 'YYFhot2013',
+        # 'PASSWORD': 'YYFhot2013',
         # 'HOST': 'ec2-54-197-241-79.compute-1.amazonaws.com'
     }
 }
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+
 
 # DATABASES = {
 #     'default': {
@@ -105,7 +110,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),os.path.join(BASE_DIR, 'templates')
 )
-
+# STATIC_ROOT = 'staticfiles'
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 MEDIA_URL = "/media/"
