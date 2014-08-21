@@ -7,7 +7,7 @@ editApp.run(function (editableOptions) {
 });
 
 editApp.factory('editFactory', function ($resource) {
-    return $resource('http://127.0.0.1:8000/api/v1/user/' + userId + '/', {})
+    return $resource('http://myportfoliorocks.herokuapp.com/api/v1/user/' + userId + '/', {})
 });
 
 editApp.controller('editController', function ($scope, editFactory, $http) {
@@ -21,7 +21,7 @@ editApp.controller('editController', function ($scope, editFactory, $http) {
     $scope.user['dribble'] = "httpL//www.dribble.com";
     $scope.user['about1'] = "Tell the world about who you are here";
     $scope.user['about2'] = "Tell us more";
-    $scope.user['name'] = "Kevin Tandean";
+    $scope.user['name'] = "Your Name";
     $scope.user['skills'] = "angular - django - python - tastypie - jquery";
     $scope.user['location'] = "Location";
     $scope.user['address'] = "157 Sutter St, San Francisco, CA";
