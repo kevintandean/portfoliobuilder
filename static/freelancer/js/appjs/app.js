@@ -7,7 +7,7 @@ editApp.run(function (editableOptions) {
 });
 
 editApp.factory('editFactory', function ($resource) {
-    return $resource('http://myportfoliorocks.herokuapp.com/api/v1/user/' + userId + '/', {})
+    return $resource('http://myportfoliorockss.herokuapp.com/api/v1/user/' + userId + '/', {})
 });
 
 editApp.controller('editController', function ($scope, editFactory, $http) {
