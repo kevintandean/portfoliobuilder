@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -16,6 +17,8 @@ def landing(request):
         form = Form(request.POST)
         if form.is_valid():
             user = form.save()
+            login(request, user)
+
             return redirect("edit")
 
     else:
@@ -38,8 +41,9 @@ def edit(request):
     avatar = Image.objects.get(user=user)
     button = 'View'
     buttonlink = '/'+user.username+'/'
+    displaybutton = True
     # print user.color.color
-    return render(request,'freelancer/index.html', {'project':project, 'disabled' :disabled, 'avatar':avatar, 'button':button, 'buttonlink':buttonlink})
+    return render(request,'freelancer/index.html', {'project':project, 'disabled' :disabled, 'avatar':avatar, 'button':button, 'buttonlink':buttonlink, 'displaybutton':displaybutton})
 
 def view_portfolio(request, username):
     user = User.objects.get(username=username)
