@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'builder',
     'south',
     'jfu',
+    'registration_bootstrap',
+    'crispy_forms'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +55,9 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'portfoliobuilder.urls'
 
 WSGI_APPLICATION = 'portfoliobuilder.wsgi.application'
+
+LOGIN_REDIRECT_URL = 'edit'
+
 
 
 # Database

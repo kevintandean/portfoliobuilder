@@ -1,0 +1,136 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" ng-app="editApp">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Freelancer - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="{% static 'freelancer/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'freelancer/css/freelancer.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'freelancer/font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: hidden !important;
+}
+    </style>
+
+    <!--DROPZONE -->
+    <script src="{% static 'freelancer/js/appjs/dropzone.js' %}"></script>
+</head>
+
+
+<body id="page-top" class="index" ng-cloak>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="editController">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {% verbatim %}<a class="navbar-brand ng-cloak" href="#page-top"  editable-text="user.header" onaftersave="updateUser()">myPortfolio.rocks</a>{% endverbatim %}
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-right" method="post" action="/login/">
+                    {% csrf_token %}
+                    <div class="form-group" style="padding:5px">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group" style="padding:5px">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-info">Sign In</button>
+                </form>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<!-- Header -->
+<header class="onchange" ng-controller="editController">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron" style="background-color: rgba(0,0,0,0.4)">
+    <div class="row">
+{#        <div class="col-md-12" style="margin-top:20%">#}
+            {% block alert %}{% endblock %}
+{#        </div>#}
+    </div>
+    <div class="row">
+    <div class="col-md-6" style="padding-top:40px" >
+        <blockquote>
+            <p style="font-size:30px"><b>
+
+                "Best portfolio builder ever! myPortfolio.rocks ROCKS!"</b></p>
+            <p><i>-Kevin</i></p>
+        </blockquote>
+    </div>
+        <div class="col-md-6" style="background: rgba(200,200,200,0.8); border-radius: 15px; padding:30px">
+            <form method="post" action="." class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group has-info">
+                    {%  for field in form %}
+<!--                <div>{{ field.label_tag }}</div>-->
+                    {{ field.errors }}
+                    <div style="padding:5px">{{ field }}</div>
+                    {% endfor %}
+<!--            <input type="submit" value="Submit">         -->
+                <div style="padding:5px"><button class="btn btn-info btn-block" type="submit">sign up</button>
+                </div>
+                </div>
+            </form>
+{#            <form method="post" action="." class="form-horizontal">#}
+{#                {% csrf_token %}#}
+{#                <div class="form-group">#}
+{#                    {%  for field in form %}#}
+{#<!--                <div>{{ field.label_tag }}</div>-->#}
+{#                    {{ field.errors }}#}
+{#                    <div style="padding:5px">{{ field }}</div>#}
+{#                    {% endfor %}#}
+{#<!--            <input type="submit" value="Submit">         -->#}
+{#                <div style="padding:5px"><button class="btn btn-default btn-block" type="submit">sign up</button>#}
+{#                </div>#}
+{#                </div>#}
+{#            </form>#}
+        </div>
+{#        <div class="col-md-4" style="background: #999"></div>#}
+    </div>
+</div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

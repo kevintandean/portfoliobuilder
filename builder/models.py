@@ -18,6 +18,13 @@ class Image(models.Model):
     html_id = models.CharField(max_length=40)
     image = models.ImageField(upload_to='user_image', null=True)
 
+    def image_url(self):
+        if bool(self.image)==False:
+            return "/media/img/profile.png"
+        else:
+            return self.image.url
+
+
 class Project(models.Model):
     user = models.ForeignKey(User, related_name = 'user_project')
     image = models.ImageField(upload_to='project_image', null=True, blank=True)
@@ -33,7 +40,11 @@ class Project(models.Model):
 
     def image_url(self):
         if bool(self.image)==False:
-            return "/media/img/portfolio/cabin"
+            return "/media/img/portfolio/cabin.png"
         else:
             return self.image.url
 
+
+class Color(models.Model):
+    user = models.OneToOneField(User, related_name='color')
+    color = models.CharField(max_length=30, null=True)

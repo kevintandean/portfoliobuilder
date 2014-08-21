@@ -15,7 +15,7 @@
                             <hr class="star-primary">
                             <img id="uploadFile{{ proj.id }}" src="{{ proj.image_url }}" class="img-responsive img-centered" alt="">
                             <p editable-textarea="project[{{ proj.id }}].description" onaftersave="updateProject()">{{ proj.angular_description }}</p>
-                            <div id="uploadFile{{ proj.id }}"><h1>UPLOAD</h1></div>
+{#                            <div id="uploadFile{{ proj.id }}"><h1>UPLOAD</h1></div>#}
                             <ul class="list-inline item-details">
 
 {#                                {% load jfutags %}#}
@@ -47,8 +47,9 @@
         console.log("yeay");
         console.log(response);
         $("img#uploadFile{{ proj.id }}").attr('src',response.image_url);
-
+        $(".thumbnail{{ proj.id }}").attr('src', response.image_url);
     })
 
     </script>
+
 {% endfor %}

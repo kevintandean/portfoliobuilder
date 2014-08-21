@@ -31,16 +31,23 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: hidden !important;
+}
+    </style>
 
     <!--DROPZONE -->
+    {% if disabled == 'false' %}
     <script src="{% static 'freelancer/js/appjs/dropzone.js' %}"></script>
+    {% endif %}
 </head>
 
 
-<body id="page-top" class="index">
+<body id="page-top" class="index" ng-cloak>
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="editController">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -51,7 +58,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+            {% verbatim %}<a class="navbar-brand ng-cloak" href="#page-top"  editable-text="user.header" onaftersave="updateUser()">{{ user.header }}</a>{% endverbatim %}
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,6 +76,12 @@
                 <li class="page-scroll">
                     <a href="#contact">Contact</a>
                 </li>
+                {% if displaybutton %}
+                <li class="page-scroll">
+                    <a class="btn btn-success" href="{{ buttonlink }}">{{ button }}</a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -77,25 +90,28 @@
 </nav>
 
 <!-- Header -->
-<header>
+<header class="onchange" ng-controller="editController">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" src="/media/img/profile.png" alt="">
-
+                <div id="colorwheel" style="z-index:10; position:absolute"></div>
+                <!--
+                  <button ng-controller=editController ng-click="toggleEdit()">EDIT</button>
+-->
+                <img class="img-responsive img-circle" width= "256px" src="{{ avatar.image_url }}" id="profilepicture" alt="">
+{% verbatim %}
                 <div class="intro-text" ng-controller="editController">
-                    {% verbatim %}
-                    <span class="name" editable-text="user.name" onaftersave="updateUser(name)" id="name">{{ user.name }}</span>
-                    <hr class="star-light">
-                    <span class="skills" editable-text="user.skills"
-                          onaftersave="updateUser(skills)">{{ user.skills }}</span>
-                    {% endverbatim %}
+                    <span class="name" editable-text="user.name" onaftersave="updateUser()" id="name">{{ user.name }}</span>
+                    <hr class="star-light onchange">
+                    <span class="skills" editable-textarea="user.skills"
+                          onaftersave="updateUser()">{{ user.skills }}</span>
                 </div>
 
             </div>
         </div>
     </div>
 </header>
+{% endverbatim %}
 
 
 
@@ -105,30 +121,31 @@
 
 
 <!-- About Section -->
-<section class="success" id="about">
+<section class="success onchange" id="about">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>About</h2>
-                <hr class="star-light">
+                <hr class="star-light onchange">
             </div>
         </div>
-        <div class="row">
+        {% verbatim %}
+        <div class="row" ng-controller="editController">
             <div class="col-lg-4 col-lg-offset-2">
-                <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete
-                    source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy
-                    customization.</p>
+                <p editable-textarea="user.about1" onaftersave="updateUser(name)">{{ user.about1 }}</p>
             </div>
             <div class="col-lg-4">
-                <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or
-                    a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+                <p editable-textarea="user.about2" onaftersave="updateUser(name)">{{ user.about2 }}</p>
             </div>
             <div class="col-lg-8 col-lg-offset-2 text-center">
+                <!--
                 <a href="#" class="btn btn-lg btn-outline">
                     <i class="fa fa-download"></i> Download Theme
-                </a>
+                </a> -->
+
             </div>
         </div>
+        {% endverbatim %}
     </div>
 </section>
 
@@ -197,17 +214,18 @@
 </section>
 
 <!-- Footer -->
-<footer class="text-center">
+{% verbatim %}
+<footer class="text-center" ng-controller="editController">
     <div class="footer-above">
         <div class="container">
             <div class="row">
-                <div class="footer-col col-md-4">
-                    <h3>Location</h3>
+                <div class="footer-col col-md-6">
+                    <h3 editable-text="user.location" onaftersave="updateUser()">{{ user.location }}</h3>
 
-                    <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                    <p editable-textarea="user.address" onaftersave="updateUser()">{{ user.address }}</p>
                 </div>
-                <div class="footer-col col-md-4" ng-controller="editController">
-                    <h3>Around the Web</h3>
+                <div class="footer-col col-md-6">
+                    <h3 editable-text="user.aroundtheweb">{{ user.aroundtheweb }}</h3>
                     <ul class="list-inline">
                         <li>
                             <a editable-text="user.fblink" href="{{ user.fblink }}" onaftersave="updateUser()"
@@ -222,19 +240,20 @@
                                class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
                         </li>
                         <li>
-                            <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                            <a editable-text="user.linkedin" href="{{ user.linkedin }}" onaftersave="updateUser()" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
                         </li>
                         <li>
-                            <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
+                            <a editable-text="user.dribble" href="{{ user.dribble }}" onaftersave="updateUser()" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
                         </li>
                     </ul>
                 </div>
+                <!--
                 <div class="footer-col col-md-4">
                     <h3>About Freelancer</h3>
 
                     <p>Freelance is a free to use, open source Bootstrap theme created by <a
                             href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -242,12 +261,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    Copyright &copy; Your Website 2014
+                    Copyright &copy; My portfolio 2014
                 </div>
             </div>
         </div>
     </div>
 </footer>
+{% endverbatim %}
 
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
 <div class="scroll-top page-scroll visible-xs visble-sm">
@@ -284,13 +304,98 @@
 <!--Angular Xeditable -->
 <link href="{% static "bower_components/angular-xeditable/dist/css/xeditable.css" %}" rel="stylesheet">
 <script src="{% static "bower_components/angular-xeditable/dist/js/xeditable.js" %}"></script>
+
 <script type="text/javascript">
     var userId = {{ user.id }};
-    var portfolioTemplate = '<div class="row"><div class="col-sm-4 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="caption"><div class="caption-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="/media/img/portfolio/cabin.png" class="img-responsive" alt="">  </a></div></div>';
+{#    var portfolioTemplate = '<div class="row"><div class="col-sm-4 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="caption"><div class="caption-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="/media/img/portfolio/cabin.png" class="img-responsive" alt="">  </a></div></div>';#}
+    var disabled = {{ disabled }};
+
+    var profilePic = new Dropzone("#profilepicture", {url: '/upload_profile/'});
+    profilePic.on('success', function(file, response){
+        console.log(response);
+        $("#profilepicture").attr('src',response.image_url);
+    })
 </script>
 
 <script src="{% static "freelancer/js/appjs/app.js" %}"></script>
 
+<script src="{% static "freelancer/js/raphael-min.js" %}"></script>
+<script src="{% static "freelancer/js/colorwheel.js" %}"></script>
+
+<script>
+    if (disabled === false){
+        var cw = Raphael.colorwheel($("#colorwheel")[0],150),
+      onchange_el = $(".onchange"),
+      ondrag_el = $("#colorwheel .ondrag");
+      cw.color("#F00");
+
+  function start(){ondrag_el.show()}
+  function stop(){ondrag_el.hide()}
+
+  cw.ondrag(start, stop);
+  cw.onchange(function(color)
+    {
+      var colors = [parseInt(color.r), parseInt(color.g), parseInt(color.b)];
+      onchange_el.css("background", color.hex);
+      var usercolor =color.hex;
+        usercolor = usercolor.toString(16);
+        function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+        var jsoncolor = JSON.stringify({'color': usercolor});
+
+        $.ajax({
+            url: '/color/',
+            type: 'POST',
+            data: jsoncolor,
+        })
+    })}
+
+</script>
+<script>
+    $(document).ready(function(){
+        $('.onchange').css('background', '{{ user.color.color }}');
+        $('.page-scroll').hover(function(){
+            console.log("here");
+            $(this).css('color', 'red');
+        });
+{#        $('.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus').css('color', 'red');#}
+        $('body').css('visibility', 'visible');
+
+       if (disabled) {
+        console.log("hello");
+        var $editable=$('.editable');
+        $editable.removeClass('editable-click');
+        $editable.unbind('click');
+        $('.btn-social').removeClass('editable');
+    }
+    });
+
+</script>
 
 </body>
 </html>
