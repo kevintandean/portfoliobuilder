@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -65,19 +65,10 @@ LOGIN_REDIRECT_URL = 'edit'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'portfoliobuilder',
-        'USER': 'postgres',
-        # 'PORT': '5432',
-        'PASSWORD': 'YYFhot2013',
-        # 'HOST': 'ec2-54-197-241-79.compute-1.amazonaws.com'
-    }
-}
 
-# import dj_database_url
-# DATABASES['default'] =  dj_database_url.config()
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 ALLOWED_HOSTS = ['*']
 
@@ -129,3 +120,10 @@ TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth',
                                 'django.core.context_processors.request',
                                'django.core.context_processors.static',
 )
+
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
