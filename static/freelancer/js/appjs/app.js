@@ -1,6 +1,8 @@
 /**
  * Created by kevin on 8/16/2014.
  */
+ 
+// Should split this out into multiple files
 var editApp = angular.module("editApp", ["xeditable", "ngResource"]);
 editApp.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
@@ -11,7 +13,7 @@ editApp.factory('editFactory', function ($resource) {
 });
 
 editApp.controller('editController', function ($scope, editFactory, $http) {
-
+    // This looks like it could be made better and not defaulted like this
     $scope.user = {};
     $scope.user['header'] = "MyPortfolio.rocks";
     $scope.user['fblink'] = "http://www.facebook.com";
@@ -41,6 +43,7 @@ editApp.controller('editController', function ($scope, editFactory, $http) {
         return $scope.user;
     };
 
+    // Don't use jQuery in your Angular controllers!!!!
     if (disabled) {
         console.log("hello");
         var $editable=$('.editable');
