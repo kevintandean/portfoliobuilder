@@ -30,9 +30,12 @@ def landing(request):
 
 
 def edit(request):
+    # This seems a bit hacky if a user hasn't made a site yet, maybe you write a function
+    # or have a separate workflow for setting up your portfolio for the first time?
     project = Project.objects.filter(user=request.user)
     if len(project)==0:
         project = [Project.objects.create(user=request.user)]
+    # request.user is the same thing that this returns, you can just use request.user
     user = User.objects.get(id=request.user.id)
     # print request.user.id
     disabled = 'false'
