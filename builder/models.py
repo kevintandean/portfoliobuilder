@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+# These models all share a lot of similar fields, you could make an abstract base model that they all extend
 class Text(models.Model):
     user = models.ForeignKey(User, related_name = 'user_text')
     html_id = models.CharField(max_length=40)
@@ -26,6 +27,7 @@ class Image(models.Model):
 
 
 class Project(models.Model):
+    # your related names can drop the "user_" prefix, it's redundant
     user = models.ForeignKey(User, related_name = 'user_project')
     image = models.ImageField(upload_to='project_image', null=True, blank=True)
     title = models.CharField(max_length=100, null=True, default="title here")
@@ -44,7 +46,8 @@ class Project(models.Model):
         else:
             return self.image.url
 
-
+# This model seems a little weird, maybe there should be another "Portfolio" model that stores things
+# like their color, name of their portfolio site, url of their site, etc?
 class Color(models.Model):
     user = models.OneToOneField(User, related_name='color')
     color = models.CharField(max_length=30, null=True)
