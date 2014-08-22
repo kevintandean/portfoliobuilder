@@ -9,7 +9,7 @@ __author__ = 'kevin'
 from tastypie.resources import ModelResource
 from builder.models import *
 
-
+# If you put this at the end of the file, you wouldn't have to put the full path to each resource in a string
 class UserResource(ModelResource):
     text = ToManyField('builder.api.resources.TextResource', 'user_text', full=True)
     textarea = ToManyField('builder.api.resources.TextAreaResource', 'user_textarea', full=True)
