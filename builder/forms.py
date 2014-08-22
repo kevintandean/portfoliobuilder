@@ -11,6 +11,7 @@ class ProjectImageForm(ModelForm):
         model = Project
         fields = ['image']
 
+# Should name this something other than Form
 class Form(UserCreationForm):
     username = forms.RegexField(label=("Username"), max_length=30,
         regex=r'^[\w.@+-]+$',
